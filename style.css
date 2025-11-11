@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: radial-gradient(circle at top, #0a0a0a 0%, #000 100%);
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== Splash Screen ===== */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #4a4f6f, #0077ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 1s ease;
+}
+
+#splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logo {
+  font-size: 3em;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 25px #000;
+  animation: logoGlow 2s ease infinite alternate;
+}
+
+.logo span { color: #000; }
+
+@keyframes logoGlow {
+  0% { text-shadow: 0 0 5px #fff, 0 0 15px #00eaff; }
+  100% { text-shadow: 0 0 25px #00eaff, 0 0 40px #0077ff; }
+}
+
+/* ===== Header ===== */
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  padding: 10px 20px 20px;
+}
+header h1 {
+  text-align: center;
+  font-size: 2em;
+  color: #00eaff;
+  text-shadow: 0 0 15px #00eaff;
+  margin-bottom: 10px;
+}
+
+/* ===== Search & Menu ===== */
+.top-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+#search {
+  width: 80%;
+  max-width: 400px;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 0 10px #00eaff;
+}
+#search::placeholder { color: #aaa; }
+.menu {
+  font-size: 24px;
+  Saw: pointer;
+}
+.menu-links {
+  position: absolute;
+  right: 20px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid #00eaff;
+  border-radius: 8px;
+  padding: 10px;
+}
+.menu-links a {
+  display: block;
+  color: #00eaff;
+  text-decoration: none;
+  padding: 5px 0;
+}
+.menu-links a:hover { text-decoration: underline; }
+.hidden { display: none; }
+
+/* ===== Sections ===== */
+.movie-section {
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.movie-section h2 {
+  margin-left: 15px;
+  color: #00eaff;
+  text-shadow: 0 0 10px #0077ff;
+  margin-bottom: 10px;
+}
+
+/* ===== Movie grid ===== */
+.movie-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+.movie {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden;
+  transition: transform .3s, box-shadow .3s;
+}
+.movie:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,234,255,0.5);
+}
+.movie img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+.movie h2 {
+  font-size: 14px;
+  padding: 8px;
+  color: #00eaff;
+}
+
+/* Horizontal scroll on mobile */
+@media (max-width: 700px) {
+  .movie-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+  }
+  .movie {
+    flex: 0 0 auto;
+    width: 160px;
+    scroll-snap-align: start;
+  }
+}
+
+/* ===== Modal ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+.modal-content {
+  background: rgba(20,20,20,0.95);
+  border: 1px solid #00eaff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  padding: 20px;
+  color: #fff;
+  box-shadow: 0 0 25px #00eaff;
+  animation: fadeIn 0.4s ease;
+}
+#close-modal {
+  float: right;
+  font-size: 26px;
+  cursor: pointer;
+  color: #00eaff;
+}
+#close-modal:hover { color: #fff; }
+#modal-body iframe {
+  width: 100%;
+  height: 400px;
+  border: none;
+  margin: 15px 0;
+}
+.providers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.provider {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #00eaff;
+  font-size: 14px;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+/* Force anything hidden to really be hidden */
+.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #aaa;
+  background: rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+footer a {
+  color: #00eaff;
+  text-decoration: none;
+}
+
+/* ===== Unified H2 Headers (Index + Privacy Page) ===== */
+h2 {
+  font-family: 'Orbitron', sans-serif; /* futuristic font */
+  font-size: 2rem;
+  color: #00eaff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 
+    0 0 5px #00eaff,
+    0 0 10px #0077ff,
+    0 0 20px #00eaff,
+    0 0 30px #0077ff;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #00eaff;
+  padding-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+h2:hover {
+  color: #fff;
+  text-shadow: 
+    0 0 10px #fff,
+    0 0 20px #00eaff,
+    0 0 30px #0077ff,
+    0 0 40px #00eaff;
+  border-bottom-color: #fff;
+}
+
+/* Optional: Animated underline for futuristic effect */
+h2::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #00eaff;
+  transition: width 0.4s ease;
+  margin-top: 4px;
+}
+
+h2:hover::after {
+  width: 100%;
+}
+/* ===== Go Home Link Button ===== */
+.go-home {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #00eaff;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 1px;
+  border: 2px solid #00eaff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #00eaff, 0 0 20px #0077ff, 0 0 30px #00eaff;
+  transition: all 0.3s ease;
+  background: rgba(0,0,0,0.3);
+}
+
+.go-home:hover {
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 20px #00eaff, 0 0 40px #0077ff, 0 0 60px #00eaff;
+  background: rgba(0,0,0,0.6);
+  transform: scale(1.05);
+}
